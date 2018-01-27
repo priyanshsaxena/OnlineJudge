@@ -1,0 +1,39 @@
+{% load static %}
+<html>
+<head>
+<title>Problems</title>
+<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/jquery-1.6.2.min.js"></script>
+<script src="{% static 'onlinejudge/js/pace.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'onlinejudge/css/style.css' %}" />
+<link href="{% static 'onlinejudge/css/pace-theme-atom.css' %}" rel="stylesheet" />
+<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css'>
+</head>
+<body>
+
+<header class="oj-header">
+	<div class="oj-header-limiter">
+		<h1><a href="{% url 'onlinejudge:index' %}">Online<span>Judge</span></a></h1>
+		<nav>
+			<a href="{% url 'onlinejudge:index' %}">Home</a>
+			<a href="{% url 'onlinejudge:problems' %}" class="selected">Problems</a>
+			<a href="#">Editorials</a>
+		</nav>
+		<ul>
+			<li><a href="#" class="lightbox_trigger">Login</a></li>
+			<li><a href="#" class="lightbox_trigger">Sign up</a></li>
+		</ul>
+	</div>
+</header>
+
+{% if latest_problems_list %}
+    <ul>
+    {% for problem in latest_problems_list %}
+        <li><a href="{% url 'onlinejudge:problem_details' problem.question_name %}">{{ problem.question_name }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No questions are available.</p>
+{% endif %}
+</body>
+</html>

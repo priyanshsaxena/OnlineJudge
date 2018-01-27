@@ -1,0 +1,16 @@
+<html>
+<head>
+<title>{% if problem %} {{problem.question_name}} {% endif %}</title>
+</head>
+<body>
+{% if problem %}
+	<h1>{{problem.question_name}}</h1><br/>
+	<p>{{problem.question_description}}</p><br/>
+	<form action="{% url 'onlinejudge:new_submission' %}" method="post" enctype="multipart/form-data">
+	{% csrf_token %}
+	<input type="file" name="codefile"><br/><br/>
+	<input type="submit" value="Upload">
+	</form>
+{% endif %}
+</body>
+</html>

@@ -1,0 +1,107 @@
+{% load static %}
+<html>
+<head>
+	<title>Index</title>
+	<script class="cssdeck" src="//cdnjs.cloudflare.com/ajax/libs/jquery/1.8.0/jquery.min.js"></script>
+	<script src="https://code.jquery.com/jquery-1.6.2.min.js"></script>
+	<script src="{% static 'onlinejudge/js/pace.js' %}"></script>
+	<link href="{% static 'onlinejudge/css/pace-theme-atom.css' %}" rel="stylesheet" />
+	<link href="{% static 'onlinejudge/css/style.css' %}" rel="stylesheet" />
+	<link href='http://fonts.googleapis.com/css?family=Cookie' rel='stylesheet' type='text/css' />
+
+	<script type="text/javascript">
+		jQuery(document).ready(function($) {	
+		$('.lightbox_trigger').click(function(e) {
+			e.preventDefault();
+			if ($('#lightbox').length > 0) {				
+				$('#lightbox').show();
+			}
+			else {
+				var lightbox = 
+				'<div id="lightbox">' +
+					'<p id=\"close\"></p>' +	
+				'</div>';
+				$('.oj-header-limiter').append(lightbox);
+			}
+		});
+		$('#lightbox').click(function(e) {
+			var container = $('#close');
+			if (container.is(e.target)) {
+				$('#lightbox').hide(200);
+			}
+		});
+	});
+
+	$('document').ready(function(){
+		$('input[type="text"], input[type="password"], textarea').focus(function(){
+			var background = $(this).attr('id');
+			$('#' + background + '-form').addClass('formgroup-active');
+			$('#' + background + '-form').removeClass('formgroup-error');
+		});
+		$('input[type="text"], input[type="password"], textarea').blur(function(){
+			var background = $(this).attr('id');
+			$('#' + background + '-form').removeClass('formgroup-active');
+		});
+
+	function errorfield(field){
+		$(field).addClass('formgroup-error');
+		console.log(field);	
+	}
+
+	$("#loginform").submit(function() {
+		var stopsubmit = false;
+
+	if($('#username').val() == "") {
+		errorfield('#username-form');
+		stopsubmit=true;
+	}
+	if($('#password').val() == "") {
+		errorfield('#password-form');
+		stopsubmit=true;
+	}
+	  if(stopsubmit) return false;
+	});
+			
+	});
+
+	</script>
+
+</head>
+<body>
+<header class="oj-header">
+	<div class="oj-header-limiter">
+		<h1><a href="{% url 'onlinejudge:index' %}">Online<span>Judge</span></a></h1>
+		<nav>
+			<a href="{% url 'onlinejudge:index' %}" class="selected">Home</a>
+			<a href="{% url 'onlinejudge:problems' %}">Problems</a>
+			<a href="#">Editorials</a>
+		</nav>
+		<ul>
+			<li><a href="#" class="lightbox_trigger">Login</a></li>
+			<li><a href="#" class="lightbox_trigger">Sign up</a></li>
+		</ul>
+	</div>
+</header>
+<div class="content">
+	<div id="lightbox">
+	    <img src="{% static 'onlinejudge/images/close.png' %}" id="close" style="width:50px;height:50px"/>
+	    <div id="loginform">
+	    <!-- <div class="fish"></div> -->
+	        <form method="get" action="#">
+	        	<div class="formgroup" id="username-form">
+				    <label for="email">Your username*</label>
+				    <input type="text" id="username" placeholder="User Name" name="username">
+				</div>
+	        	<div class="formgroup" id="password-form">
+				    <label for="message">Your password*</label>
+				    <input type="password" id="password" placeholder="Password" name="password">
+				</div>
+	        	<input type="submit" value="Login" />
+	        </form>
+	    </div>
+	</div>
+	<!--<a href="{% url 'onlinejudge:problems'%}"><button>Solve Problems</button></a>
+	<a href="#"><button>View Profile</button></a>-->
+</div>
+</body>
+</html>
